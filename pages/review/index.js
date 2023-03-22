@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSubmitFormApi } from "../../services/datasource";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function index() {
   const [firstName, setFirstName] = useState("");
@@ -37,84 +38,13 @@ function index() {
           zipCode,
         },
       });
-
-      // console.log(object);
     }
-    // setFirstName("");
   };
+
+  const { data: session, status } = useSession();
 
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
-      {/* <div className="flex flex-col gap-2">
-        <h1 className="text-lg text-black font-lato font-semibold">
-          Full Name
-        </h1>
-        <input
-          defaultValue={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          className="outline"
-          type="text"
-          name="firstName"
-          id="firstName"
-        />
-        <label
-          className="text-gray-400 text-sm font-ssp font-medium"
-          htmlFor="firstName"
-        >
-          First Name
-        </label>
-      </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="lastName">LAST NAME</label>
-        <input
-          defaultValue={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          className="outline"
-          type="text"
-          name="lastName"
-          id="lastName"
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email">EMAIL</label>
-        <input
-          defaultValue={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="outline"
-          type="email"
-          name="email"
-          id="email"
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="phoneNumber">PHONE NUMBER</label>
-        <input
-          defaultValue={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          className="outline"
-          type="text"
-          name="phoneNumber"
-          id="phoneNumber"
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="address">ADDRESS</label>
-        <input
-          defaultValue={address}
-          onChange={(e) => setAddress(e.target.value)}
-          className="outline"
-          type="text"
-          name="address"
-          id="address"
-        />
-      </div>
-      <button
-        onClick={handleSubmit}
-        className="bg-black text-white"
-        type="submit"
-      >
-        Submit
-      </button> */}
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-2">
         <div className="col-span-2 flex flex-col gap-3">
           <div>
@@ -271,6 +201,23 @@ function index() {
           >
             Submit
           </button>
+        </div>
+        <div className="col-span-1 flex justify-center items-center">
+          <button
+            onClick={() => signIn()}
+            className="bg-black p-3 text-white rounded-md text-lg"
+          >
+            Sign In For Checkout
+          </button>
+          <button
+            onClick={() => signOut()}
+            className="bg-black p-3 text-white rounded-md text-lg"
+          >
+            Sign Out
+          </button>
+          {status === "authenticated"
+            ? "You have scuccesfully login"
+            : "You have not"}
         </div>
       </div>
     </div>
