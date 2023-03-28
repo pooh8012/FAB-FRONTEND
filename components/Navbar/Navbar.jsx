@@ -14,7 +14,7 @@ function Navbar() {
   const router = useRouter();
 
   const cart = useSelector((state) => state.cart);
-  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+  // const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
   // console.log(totalItems);
   // let i = 1;
   // useEffect(() => console.log(i++));
@@ -70,16 +70,15 @@ function Navbar() {
               <ul className="flex  flex-col lg:p-4 mt-4 rounded-lg lg:flex-row lg:space-x-6 space-y-4 lg:space-y-0 lg:mt-0 lg:text-sm lg:font-medium lg:bg-transparent ">
                 <li
                   className={`${
-                    router.pathname === "/destinations"
+                    router.pathname === "/"
                       ? "lg:underline lg:decoration-ht-100 lg:underline-offset-[17px]  lg:decoration-[7px] "
                       : "font-semibold"
                   } text-lg font-bold font-mulish px-3 text-black lg:hover:underline decoration-black decoration-[7px] underline-offset-[17px]`}
                 >
                   <Link
-                    href="/destinations"
+                    href="/"
                     onClick={() => {
                       setNavbar(!navbar);
-                      webEngageEventTracker("menu_click", "destinations");
                     }}
                   >
                     Home
@@ -87,14 +86,14 @@ function Navbar() {
                 </li>
                 <li
                   className={`${
-                    router.pathname === "/hostels"
+                    router.pathname === "/about"
                       ? "lg:underline lg:decoration-ht-100 lg:underline-offset-[17px]  lg:decoration-[7px] "
                       : "font-semibold"
                   } text-lg font-bold font-mulish text-black px-3 lg:hover:underline decoration-black decoration-[7px] underline-offset-[17px]`}
                 >
                   <Link
                     className=""
-                    href="/hostels"
+                    href="/about"
                     onClick={() => {
                       setNavbar(!navbar);
                       webEngageEventTracker("menu_click", "hostels");
@@ -158,77 +157,21 @@ function Navbar() {
                 </li>
                 <li>
                   <div
-                    className="rounded-full cursor-pointer relative border-2 p-3"
+                    className="cursor-pointer relative "
                     onClick={() => setShowModal(true)}
                   >
-                    <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">
-                      {totalItems}
-                    </span>
+                    {/* {totalItems > 0 ? (
+                      <span className="absolute top-0 right-0 md:right-5 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">
+                        {totalItems}
+                      </span>
+                    ) : (
+                      <></>
+                    )} */}
+
                     <Image src={Cart} alt="" width={20} height={20} />
                   </div>
                 </li>
                 {showModl && <ReviewModal setShowModal={setShowModal} />}
-
-                {/* <li className="hidden lg:block">
-                  {userData === undefined ? (
-                    <></>
-                  ) : userData?.profile === null ||
-                    userData?.profile === undefined ? (
-                    <Link
-                      href="/login"
-                      onClick={() => {
-                        setNavbar(!navbar);
-                        webEngageEventTracker("menu_click", "login");
-                      }}
-                      className={`${
-                        router.pathname === "/login"
-                          ? `text-black bg-black lg:hover:text-black lg:hover:bg-black`
-                          : `text-black bg-black lg:hover:text-black lg:hover:bg-black`
-                      } font-semibold px-3 lg:border-2 lg:border-black lg:px-4 lg:py-2 rounded-full `}
-                    >
-                      LOGIN
-                    </Link>
-                  ) : userData?.profile?.fullName !== "Guest" ? (
-                    <Link
-                      className={`border-2
-                      ${
-                        router.pathname === "/profile"
-                          ? `bg-black text-black`
-                          : `bg-black text-black`
-                      }
-                      border-black font-semibold rounded-full ${
-                        getShortHand(userData?.profile?.fullName)?.length === 2
-                          ? `px-3 py-2.5`
-                          : `px-4 py-2`
-                      }`}
-                      onClick={() => {
-                        webEngageEventTracker("menu_click", "profile");
-                      }}
-                      href="/profile"
-                    >
-                      {getShortHand(userData?.profile?.fullName)}
-                    </Link>
-                  ) : (
-                    <div
-                      className={`border-2
-                      ${
-                        router.pathname === "/profile"
-                          ? `bg-black text-black`
-                          : `bg-black text-black`
-                      }
-                      border-black font-semibold rounded-full cursor-pointer select-none ${
-                        getShortHand(userData?.profile?.fullName)?.length === 2
-                          ? `px-3 py-2.5`
-                          : `px-4 py-2`
-                      }`}
-                      onClick={() => {
-                        webEngageEventTracker("menu_click", "profile");
-                      }}
-                    >
-                      {getShortHand(userData?.profile?.fullName)}
-                    </div>
-                  )}
-                </li> */}
               </ul>
             </div>
           </div>

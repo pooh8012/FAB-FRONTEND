@@ -12,25 +12,11 @@ function HomeProduct({ productData }) {
       <h1 className="font-lato font-semibold md:text-3xl text-lg md:text-start text-center">
         Windows
       </h1>
-      <div className="grid grid-cols-4 gap-3 mt-5">
+      <div className="grid grid-cols-3 gap-3 mt-5">
         {productData?.map((product, index) => {
-          if (product.name === "Window")
-            return <HomeProductCard key={index} productData={product} />;
+          return <HomeProductCard key={index} productData={product} />;
         })}
       </div>
-      {/* <div className="grid grid-cols-4 gap-3">
-        {cart.length === 0 ? (
-          <>You cart is empty</>
-        ) : (
-          <>
-            <div className="flex flex-col gap-2">
-              {cart.map((item, index) => {
-                return <HomeProductCard key={index} productData={item} />;
-              })}
-            </div>
-          </>
-        )}
-      </div> */}
     </div>
   );
 }

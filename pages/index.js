@@ -21,7 +21,7 @@ export default function Home({ productList }) {
         </h1>
         <HomeProduct productData={productList} />
       </div>
-      <HowItWorks />
+      {/* <HowItWorks /> */}
     </div>
   );
 }

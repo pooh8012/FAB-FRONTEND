@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { getTotal } from "../../utils/function";
 
 function ReviewModal({ setShowModal }) {
   const cart = useSelector((state) => state.cart);
@@ -27,6 +28,7 @@ function ReviewModal({ setShowModal }) {
                 {cart?.map((item, index) => {
                   return (
                     <div key={index}>
+                      <div className="flex flex-col gap-2">{item?.name}</div>
                       <div className="grid grid-cols-3">
                         <div className="col-span-2 border p-2 rounded-lg">
                           <div className="border border-gray-300 rounded-lg bg-cardbg py-2 px-3">
@@ -60,17 +62,28 @@ function ReviewModal({ setShowModal }) {
                           </div>
                         </div>
                       </div>
-                      <button
-                        onClick={() => setShowModal(false)}
-                        className="bg-black text-lg mt-4 font-semibold font-ssp py-3 rounded-lg text-white w-full"
-                      >
-                        <Link href={`/review`}>Checkout</Link>
-                      </button>
                     </div>
                   );
                 })}
               </>
             )}
+          </div>
+          <div className="grid grid-cols-3 place-items-center">
+            <button
+              className="flex col-span-2 justify-center items-center"
+              onClick={() => setShowModal(false)}
+            >
+              <Link
+                className="bg-black text-lg mt-4 font-semibold font-ssp py-3 rounded-lg text-white px-3 w-full"
+                href={`/review`}
+              >
+                Checkout
+              </Link>
+            </button>
+            <div className="flex">
+              <p className="">Payable Amount: </p>
+              <p className="">{getTotal(cart) || 0}</p>
+            </div>
           </div>
         </div>
       </div>

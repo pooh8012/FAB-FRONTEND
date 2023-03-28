@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSubmitFormApi } from "../../services/datasource";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 
 function index() {
   const [firstName, setFirstName] = useState("");
@@ -14,8 +15,9 @@ function index() {
 
   const [submitForm, { loading, error, data }] = useSubmitFormApi();
 
+  const [googleDetails, setGoogleDetails] = useState([]);
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
     if (
       firstName !== "" &&
       lastName !== "" &&
@@ -42,6 +44,56 @@ function index() {
   };
 
   const { data: session, status } = useSession();
+
+  //Rajorpay Init
+
+  const makePayment = async () => {
+    console.log("herr ...");
+    const res = await initializeRazorpay();
+    if (!res) {
+      alert("Rajorpay SDK failed");
+      return;
+    }
+
+    const rajorPayDetails = await fetch("/api/rajorpay", {
+      method: "POST",
+    }).then((t) => t.json());
+    console.log(rajorPayDetails, "Rajorpay rajorPayDetails");
+    var options = {
+      key: process.env.RAJOR_PAY_KEY,
+      currency: rajorPayDetails.currency,
+      amount: rajorPayDetails.amount,
+      order_id: rajorPayDetails.id,
+      description: "Thank you for you test donation",
+      image: "/vercel.svg",
+      handler: (response) => {
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature);
+      },
+    };
+    const paymentObject = new window.Rajorpay(options);
+    paymentObject.open();
+  };
+  const initializeRazorpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  const totalAmount = localStorage.getItem("totalAmount");
+  useEffect(() => {
+    console.log(totalAmount);
+  }, [totalAmount]);
 
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
@@ -195,7 +247,10 @@ function index() {
             </div>
           </div>
           <button
-            onClick={handleSubmit}
+            onClick={() => {
+              handleSubmit();
+              makePayment();
+            }}
             className="bg-black text-white rounded-lg py-3"
             type="submit"
           >
@@ -203,21 +258,42 @@ function index() {
           </button>
         </div>
         <div className="col-span-1 flex justify-center items-center">
-          <button
-            onClick={() => signIn()}
-            className="bg-black p-3 text-white rounded-md text-lg"
-          >
-            Sign In For Checkout
-          </button>
-          <button
-            onClick={() => signOut()}
-            className="bg-black p-3 text-white rounded-md text-lg"
-          >
-            Sign Out
-          </button>
-          {status === "authenticated"
-            ? "You have scuccesfully login"
-            : "You have not"}
+          {status === "authenticated" ? (
+            <>
+              <div className="flex flex-col justify-center items-center gap-2">
+                <div className="">
+                  <Image
+                    src={session?.user?.image}
+                    alt="The google Image"
+                    width={1000}
+                    height={1000}
+                    className="border-4 border-blue-500 rounded-full w-28 h-28"
+                  />
+                </div>
+                <h3 className="text-black font-semibold text-xl font-lato">
+                  {session?.user?.name}
+                </h3>
+                <p className="font-ssp font-medium text-base text-gray-300">
+                  {session?.user?.email}
+                </p>
+                <button
+                  onClick={() => signOut()}
+                  className="bg-black p-3 text-white rounded-md text-lg"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => signIn()}
+                className="bg-black p-3 text-white rounded-md text-lg"
+              >
+                Sign In For Checkout
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
