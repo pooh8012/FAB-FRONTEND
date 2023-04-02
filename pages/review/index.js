@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSubmitFormApi } from "../../services/datasource";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { getTotal } from "../../utils/function";
+import axios from "axios";
+import Head from "next/head";
+import Script from "next/script";
 
 function index() {
   const [firstName, setFirstName] = useState("");
@@ -13,21 +18,68 @@ function index() {
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
 
+  const [amount, setAmout] = useState("");
+
+  const cart = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    const totalAmount = getTotal(cart);
+    if (totalAmount) {
+      setAmout(totalAmount);
+    }
+  }, [cart]);
+
+  const handleMakePayment = async () => {
+    const res = await initializeRazorpay();
+    if (!res) {
+      alert("The Network issue");
+    }
+    const response = await axios.post("/api/rajorpay", { amount });
+    const { id } = response.data;
+    const options = {
+      key: "rzp_test_PjvHICxuulxUe6",
+      amount: amount,
+      currency: "INR",
+      name: "Fabricology",
+      description: "Safe Payment with us",
+      order_id: id,
+      handler: (res) => {
+        alert(res.razorpay_payment_id);
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
   const [submitForm, { loading, error, data }] = useSubmitFormApi();
 
-  const [googleDetails, setGoogleDetails] = useState([]);
+  const initializeRazorpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      // document.body.appendChild(script);
+
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+
+      document.body.appendChild(script);
+    });
+  };
 
   const handleSubmit = async (e) => {
-    if (
-      firstName !== "" &&
+    firstName !== "" &&
       lastName !== "" &&
       phoneNumber !== "" &&
       email !== "" &&
       address !== "" &&
       city !== "" &&
       state !== "" &&
-      zipCode !== ""
-    ) {
+      zipCode !== "";
+    {
       submitForm({
         variables: {
           firstName,
@@ -47,56 +99,11 @@ function index() {
 
   //Rajorpay Init
 
-  const makePayment = async () => {
-    console.log("herr ...");
-    const res = await initializeRazorpay();
-    if (!res) {
-      alert("Rajorpay SDK failed");
-      return;
-    }
-
-    const rajorPayDetails = await fetch("/api/rajorpay", {
-      method: "POST",
-    }).then((t) => t.json());
-    console.log(rajorPayDetails, "Rajorpay rajorPayDetails");
-    var options = {
-      key: process.env.RAJOR_PAY_KEY,
-      currency: rajorPayDetails.currency,
-      amount: rajorPayDetails.amount,
-      order_id: rajorPayDetails.id,
-      description: "Thank you for you test donation",
-      image: "/vercel.svg",
-      handler: (response) => {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-      },
-    };
-    const paymentObject = new window.Rajorpay(options);
-    paymentObject.open();
-  };
-  const initializeRazorpay = () => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  };
-
-  const totalAmount = localStorage.getItem("totalAmount");
-  useEffect(() => {
-    console.log(totalAmount);
-  }, [totalAmount]);
-
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
+      <Head>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" />
+      </Head>
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-2">
         <div className="col-span-2 flex flex-col gap-3">
           <div>
@@ -249,7 +256,7 @@ function index() {
           <button
             onClick={() => {
               handleSubmit();
-              makePayment();
+              handleMakePayment();
             }}
             className="bg-black text-white rounded-lg py-3"
             type="submit"
