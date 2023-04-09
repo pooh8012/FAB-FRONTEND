@@ -51,7 +51,7 @@ function HomeTop() {
   };
 
   return (
-    <div className="container mx-auto lg:px-14 px-5 mt-5">
+    <div className="container mx-auto mt-0.5">
       <div className="">
         {/* <div className=" bg-black opacity-50 w-full h-full"></div> */}
         <Slider {...settings}>
@@ -61,7 +61,7 @@ function HomeTop() {
               alt=""
               width={1000}
               height={1000}
-              className="w-full h-[32rem] object-cover rounded-lg"
+              className="w-full h-[32rem] object-cover"
             />
           </div>
           <div>
@@ -70,7 +70,7 @@ function HomeTop() {
               alt=""
               width={1000}
               height={1000}
-              className="w-full h-[32rem] object-cover rounded-lg"
+              className="w-full h-[32rem] object-cover"
             />
           </div>
         </Slider>

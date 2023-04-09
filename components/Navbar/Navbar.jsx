@@ -6,6 +6,7 @@ import Cart from "../../public/Assets/shopping-cart.png";
 import { useSelector } from "react-redux";
 import { incrementQuantity, decrementQuantity } from "../../redux/cart.slice";
 import ReviewModal from "../common/ReviewModal";
+import { getTotal } from "../../utils/function";
 
 function Navbar() {
   // states
@@ -14,10 +15,8 @@ function Navbar() {
   const router = useRouter();
 
   const cart = useSelector((state) => state.cart);
-  // const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-  // console.log(totalItems);
-  // let i = 1;
-  // useEffect(() => console.log(i++));
+
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <>
@@ -96,7 +95,6 @@ function Navbar() {
                     href="/about"
                     onClick={() => {
                       setNavbar(!navbar);
-                      webEngageEventTracker("menu_click", "hostels");
                     }}
                   >
                     About
@@ -137,38 +135,34 @@ function Navbar() {
                     Contact Us
                   </Link>
                 </li>
-                <li
-                  className={`${
-                    router.pathname === "/blogs"
-                      ? "lg:underline lg:decoration-ht-100 lg:underline-offset-[17px]  lg:decoration-[7px] "
-                      : "font-semibold"
-                  } text-lg font-bold font-mulish px-3 lg:hover:underline decoration-black text-black decoration-[7px] underline-offset-[17px]`}
-                >
-                  <Link
-                    target="_blank"
-                    href="https://blog.thehosteller.com/"
-                    onClick={() => {
-                      setNavbar(!navbar);
-                      webEngageEventTracker("menu_click", "blogs");
-                    }}
-                  >
-                    Blogs
-                  </Link>
-                </li>
-                <li>
+                {/* <li>
                   <div
                     className="cursor-pointer relative "
                     onClick={() => setShowModal(true)}
                   >
-                    {/* {totalItems > 0 ? (
-                      <span className="absolute top-0 right-0 md:right-5 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">
-                        {totalItems}
-                      </span>
-                    ) : (
-                      <></>
-                    )} */}
-
                     <Image src={Cart} alt="" width={20} height={20} />
+                    <div className="bg-blue-500 rounded-full text-center absolute top-1">
+                      {totalItems}
+                    </div>
+                  </div>
+                </li> */}
+                <li>
+                  <div
+                    onClick={() =>
+                      setShowModal(totalItems === 0 ? false : true)
+                    }
+                    className="cursor-pointer"
+                  >
+                    <div className="relative">
+                      <Image src={Cart} alt="" width={20} height={20} />
+                      {totalItems === 0 ? (
+                        <></>
+                      ) : (
+                        <div className="absolute -top-3 -right-3 px-1 bg-blue-500 opacity-60 rounded-full text-center">
+                          {totalItems}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </li>
                 {showModl && <ReviewModal setShowModal={setShowModal} />}

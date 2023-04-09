@@ -5,8 +5,6 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { getTotal } from "../../utils/function";
 import axios from "axios";
-import Head from "next/head";
-import Script from "next/script";
 
 function index() {
   const [firstName, setFirstName] = useState("");
@@ -29,11 +27,15 @@ function index() {
     }
   }, [cart]);
 
+  // OnClick function when the Razorpay api is trigger
   const handleMakePayment = async () => {
+    //The function where the Razorpay script helps to load.
     const res = await initializeRazorpay();
     if (!res) {
       alert("The Network issue");
     }
+
+    // Calling Razorpay api and Initlizing the Razorpay
     const response = await axios.post("/api/rajorpay", { amount });
     const { id } = response.data;
     const options = {
@@ -43,16 +45,24 @@ function index() {
       name: "Fabricology",
       description: "Safe Payment with us",
       order_id: id,
+      callback_url: "http://localhost:3000",
+      prefill: {
+        email: email,
+        contact: phoneNumber,
+      },
       handler: (res) => {
-        alert(res.razorpay_payment_id);
+        location.href = "http://localhost:3000";
       },
     };
+
+    //When above code excutes then Razorpay modal opens
     const rzp1 = new window.Razorpay(options);
     rzp1.open();
   };
 
   const [submitForm, { loading, error, data }] = useSubmitFormApi();
 
+  //Rajorpay script
   const initializeRazorpay = () => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -70,6 +80,7 @@ function index() {
     });
   };
 
+  //Handle Submit form when the user click on button
   const handleSubmit = async (e) => {
     firstName !== "" &&
       lastName !== "" &&
@@ -80,30 +91,44 @@ function index() {
       state !== "" &&
       zipCode !== "";
     {
+      const formData = {
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        address,
+        city,
+        state,
+        zipCode,
+      };
       submitForm({
         variables: {
-          firstName,
-          lastName,
-          phoneNumber,
-          email,
-          address,
-          city,
-          state,
-          zipCode,
+          formData,
         },
       });
+
+      try {
+        const response = await axios.post("/api/sendConfirmationMail", {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phoneNumber: formData.phoneNumber,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          email: formData.email,
+        });
+        console.log(response, "FormData");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   const { data: session, status } = useSession();
 
-  //Rajorpay Init
-
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
-      <Head>
-        <Script src="https://checkout.razorpay.com/v1/checkout.js" />
-      </Head>
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-2">
         <div className="col-span-2 flex flex-col gap-3">
           <div>
@@ -113,6 +138,7 @@ function index() {
             <div className="grid grid-cols-2 gap-5 mt-3">
               <div className="flex flex-col gap-3">
                 <input
+                  required={true}
                   defaultValue={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   className="border focus:outline-none px-2 border-gray-600 rounded-md py-2"
@@ -129,6 +155,7 @@ function index() {
               </div>
               <div className="flex flex-col gap-3">
                 <input
+                  required={true}
                   defaultValue={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   className="border focus:outline-none px-2 border-gray-600 rounded-md py-2"
@@ -155,6 +182,7 @@ function index() {
             <div className="grid grid-cols-2 gap-5 mt-3">
               <div className="flex flex-col gap-3">
                 <input
+                  required={true}
                   defaultValue={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="border focus:outline-none px-2 border-gray-600 rounded-md py-2"
@@ -171,6 +199,7 @@ function index() {
               </div>
               <div className="flex flex-col gap-3">
                 <input
+                  required={true}
                   defaultValue={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   className="border focus:outline-none px-2 border-gray-600 rounded-md py-2"
@@ -196,6 +225,7 @@ function index() {
                 Address
               </label>
               <input
+                required={true}
                 defaultValue={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className="border focus:outline-none px-2 border-gray-600 rounded-md py-2"
@@ -212,6 +242,7 @@ function index() {
                 City
               </label>
               <input
+                required={true}
                 defaultValue={city}
                 onChange={(e) => setCity(e.target.value)}
                 className="border focus:outline-none px-2 border-gray-600 rounded-md py-2"
@@ -228,6 +259,7 @@ function index() {
                 State*
               </label>
               <input
+                required
                 defaultValue={state}
                 onChange={(e) => setState(e.target.value)}
                 className="border focus:outline-none px-2 border-gray-600 rounded-md py-2"
@@ -244,6 +276,7 @@ function index() {
                 Zip Code*
               </label>
               <input
+                required
                 defaultValue={zipCode}
                 onChange={(e) => setZipCode(e.target.value)}
                 className="border focus:outline-none px-2 border-gray-600 rounded-md py-2"
@@ -253,12 +286,26 @@ function index() {
               />
             </div>
           </div>
+          {/* The HandleSubmit function and HandleMakePayment is applied on this button */}
           <button
+            disabled={
+              status !== "authenticated" ||
+              firstName === "" ||
+              lastName === "" ||
+              phoneNumber === "" ||
+              email === "" ||
+              address === "" ||
+              city === "" ||
+              zipCode === "" ||
+              state === ""
+                ? true
+                : false
+            }
             onClick={() => {
               handleSubmit();
               handleMakePayment();
             }}
-            className="bg-black text-white rounded-lg py-3"
+            className="bg-black disabled:bg-gray-600 text-white rounded-lg py-3"
             type="submit"
           >
             Submit

@@ -39,7 +39,6 @@ function Modal({ setShowModal, productData }) {
       },
     ],
   };
-  console.log(productData);
   return (
     <div className="fixed inset-0 z-10 bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
       <div className="md:w-[35rem] bg-white rounded-xl shadow-xl border">

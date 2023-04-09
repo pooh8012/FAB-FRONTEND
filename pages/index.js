@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
+import HomeBalconyProduct from "../components/Home/HomeBalconyProduct";
+import HomeDoorProduct from "../components/Home/HomeDoorProduct";
 import HomeProduct from "../components/Home/HomeProduct";
 import HomeTop from "../components/Home/HomeTop";
 import HowItWorks from "../components/Home/HowItWorks";
@@ -7,6 +9,7 @@ import { useGetListProducts } from "../services/datasource";
 
 export default function Home({ productList }) {
   // console.log(productList);
+
   return (
     <div>
       <Head>
@@ -20,6 +23,9 @@ export default function Home({ productList }) {
           My Products
         </h1>
         <HomeProduct productData={productList} />
+        <HomeDoorProduct productData={productList} />
+
+        <HomeBalconyProduct productData={productList} />
       </div>
       {/* <HowItWorks /> */}
     </div>
