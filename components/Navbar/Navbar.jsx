@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { incrementQuantity, decrementQuantity } from "../../redux/cart.slice";
 import ReviewModal from "../common/ReviewModal";
 import { getTotal } from "../../utils/function";
+import CartDrawer from "../common/Drawer";
 
 function Navbar() {
   // states
@@ -17,6 +18,11 @@ function Navbar() {
   const cart = useSelector((state) => state.cart);
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
+  useEffect(() => {
+    const body = document.querySelector("body");
+    body.style.overflow = showModl ? "hidden" : "auto";
+  });
 
   return (
     <>
@@ -148,9 +154,7 @@ function Navbar() {
                 </li> */}
                 <li>
                   <div
-                    onClick={() =>
-                      setShowModal(totalItems === 0 ? false : true)
-                    }
+                    onClick={() => setShowModal(true)}
                     className="cursor-pointer"
                   >
                     <div className="relative">
@@ -165,7 +169,8 @@ function Navbar() {
                     </div>
                   </div>
                 </li>
-                {showModl && <ReviewModal setShowModal={setShowModal} />}
+                {/* {showModl && <ReviewModal setShowModal={setShowModal} />} */}
+                <CartDrawer open={showModl} onClose={setShowModal} />
               </ul>
             </div>
           </div>

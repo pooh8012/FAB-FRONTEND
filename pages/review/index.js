@@ -3,7 +3,7 @@ import { useSubmitFormApi } from "../../services/datasource";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { getTotal } from "../../utils/function";
+import { getTotal, handleGoogleSignIn } from "../../utils/function";
 import axios from "axios";
 
 function index() {
@@ -126,6 +126,19 @@ function index() {
   };
 
   const { data: session, status } = useSession();
+
+  //localstorage
+
+  // review/index.js
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    const localStorageCart = localStorage.getItem("cartData");
+    if (localStorageCart) {
+      const cart = JSON.parse(localStorageCart);
+      setProduct(cart);
+    }
+  }, []);
 
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
@@ -341,7 +354,7 @@ function index() {
           ) : (
             <>
               <button
-                onClick={() => signIn()}
+                onClick={() => handleGoogleSignIn("/g-auth", "Sample")}
                 className="bg-black p-3 text-white rounded-md text-lg"
               >
                 Sign In For Checkout
