@@ -6,6 +6,7 @@ import HomeProduct from "../components/Home/HomeProduct";
 import HomeTop from "../components/Home/HomeTop";
 import HowItWorks from "../components/Home/HowItWorks";
 import { useGetListProducts } from "../services/datasource";
+import ProductListing from "../components/Home/ProductListing";
 
 export default function Home({ productList }) {
   // console.log(productList);
@@ -18,15 +19,11 @@ export default function Home({ productList }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeTop />
-      <div className="mt-16">
-        <h1 className="font-lato font-semibold md:text-4xl text-xl text-center">
-          My Products
-        </h1>
-        <HomeProduct productData={productList} />
-        <HomeDoorProduct productData={productList} />
+      <ProductListing />
+      <HomeProduct productData={productList} />
+      <HomeDoorProduct productData={productList} />
 
-        <HomeBalconyProduct productData={productList} />
-      </div>
+      <HomeBalconyProduct productData={productList} />
       {/* <HowItWorks /> */}
     </div>
   );

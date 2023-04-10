@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function HomeProduct({ productData }) {
   return (
-    <div className="container mx-auto md:px-14 px-5 ">
+    <div id="windows" className="container mx-auto md:px-14 px-5 ">
       <h1 className="font-lato font-semibold md:text-3xl text-lg md:text-start text-center">
         Windows
       </h1>
