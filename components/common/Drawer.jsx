@@ -1,14 +1,20 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getTotal } from "../../utils/function";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Delete from "../../public/Assets/delete.png";
+import { removeItem } from "../../redux/cart.slice";
 
 const CartDrawer = ({ open, onClose }) => {
+  const router = useRouter();
   const cart = useSelector((state) => state.cart);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
+  const handleCheckout = () => {
+    if (cart?.length === 0) {
+    } else {
+      router.push("/review");
       localStorage.setItem(
         "cartData",
         JSON.stringify({
@@ -18,7 +24,9 @@ const CartDrawer = ({ open, onClose }) => {
         })
       );
     }
-  }, [cart]);
+  };
+
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -71,9 +79,23 @@ const CartDrawer = ({ open, onClose }) => {
                         />
                       </div>
                       <div className="flex flex-col w-full gap-1">
-                        <h1 className="font-semibold text-black text-lg">
-                          {item?.name}
-                        </h1>
+                        <div className="flex items-center">
+                          <h1 className="font-semibold text-black text-lg">
+                            {item?.name}
+                          </h1>
+                          <div
+                            onClick={() => dispatch(removeItem(item?._id))}
+                            className="ml-auto cursor-pointer"
+                          >
+                            <Image
+                              src={Delete}
+                              alt=""
+                              width={15}
+                              height={15}
+                              className=""
+                            />
+                          </div>
+                        </div>
                         <div className="flex items-center">
                           <p className="text-gray-400 font-lato text-sm">
                             {item?.quantity} x ₹{item?.price}
@@ -100,15 +122,22 @@ const CartDrawer = ({ open, onClose }) => {
             </p>
           </div>
         </div>
-        <button onClick={() => onClose(false)} className="w-full mt-3">
-          <Link
-            onClick={() => onClose(false)}
+        <div
+          onClick={() => onClose(false)}
+          className="w-full flex justify-center mt-3"
+        >
+          <button
+            disabled={cart?.length === 0 ? true : false}
+            onClick={() => {
+              onClose(false);
+              handleCheckout();
+            }}
             href="/review"
-            className="bg-yellow-300 font-ssp font-semibold text-lg px-10 rounded-md py-1"
+            className="bg-yellow-300 disabled:bg-gray-400 font-ssp font-semibold text-lg px-10 rounded-md py-1"
           >
             Checkout
-          </Link>
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   );

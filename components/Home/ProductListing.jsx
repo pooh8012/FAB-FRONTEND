@@ -18,11 +18,11 @@ function ProductListing() {
             }}
             className="bg-gray-100 hover:bg-gray-400 transform transition duration-150 ease-in-out cursor-pointer flex flex-col gap-2 p-10  rounded-md col-span-2"
           >
-            <p className="font-semibold font-ssp text-lg text-black text-end">
+            <p className="font-semibold font-ssp text-lg text-gray-500 uppercase text-end">
               Chairs
             </p>
             <Image
-              src="https://res.cloudinary.com/dh7xchikj/image/upload/v1679943217/Pooja%20Project/sofa-removebg-preview_waew3v.png"
+              src="https://res.cloudinary.com/dh7xchikj/image/upload/v1681240087/1-1-removebg-preview_fokyjv.png"
               alt=""
               width={1000}
               height={1000}
@@ -30,11 +30,11 @@ function ProductListing() {
             />
           </div>
           <div className="bg-gray-100 hover:bg-gray-400 transform transition duration-150 ease-in-out cursor-pointer flex flex-col gap-2 p-10  rounded-md col-span-3">
-            <p className="font-semibold font-ssp text-lg text-black text-center">
-              Chairs
+            <p className="font-semibold font-ssp text-lg text-gray-500 uppercase text-center">
+              Cupboards
             </p>
             <Image
-              src="https://res.cloudinary.com/dh7xchikj/image/upload/v1679943217/Pooja%20Project/sofa-removebg-preview_waew3v.png"
+              src="https://res.cloudinary.com/dh7xchikj/image/upload/v1681240342/Pooja%20Project/1-3-removebg-preview_yi23le.png"
               alt=""
               width={1000}
               height={1000}

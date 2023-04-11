@@ -129,7 +129,6 @@ function index() {
 
   //localstorage
 
-  // review/index.js
   const [product, setProduct] = useState([]);
 
   useEffect(() => {
@@ -142,8 +141,8 @@ function index() {
 
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
-      <div className="grid lg:grid-cols-3 grid-cols-1 gap-2">
-        <div className="col-span-2 flex flex-col gap-3">
+      <div className="grid lg:grid-cols-5 grid-cols-1 gap-2">
+        <div className="col-span-3 flex flex-col gap-3">
           <div>
             <h1 className="text-xl text-black font-lato font-semibold">
               Full Name
@@ -324,43 +323,26 @@ function index() {
             Submit
           </button>
         </div>
-        <div className="col-span-1 flex justify-center items-center">
-          {status === "authenticated" ? (
-            <>
-              <div className="flex flex-col justify-center items-center gap-2">
-                <div className="">
-                  <Image
-                    src={session?.user?.image}
-                    alt="The google Image"
-                    width={1000}
-                    height={1000}
-                    className="border-4 border-blue-500 rounded-full w-28 h-28"
-                  />
-                </div>
-                <h3 className="text-black font-semibold text-xl font-lato">
-                  {session?.user?.name}
-                </h3>
-                <p className="font-ssp font-medium text-base text-gray-300">
-                  {session?.user?.email}
-                </p>
-                <button
-                  onClick={() => signOut()}
-                  className="bg-black p-3 text-white rounded-md text-lg"
-                >
-                  Sign Out
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={() => handleGoogleSignIn("/g-auth", "Sample")}
-                className="bg-black p-3 text-white rounded-md text-lg"
-              >
-                Sign In For Checkout
-              </button>
-            </>
-          )}
+        <div className="col-span-2 rounded-md border">
+          <div className="flex flex-col gap-3">
+            {!product ? (
+              <></>
+            ) : (
+              product?.map((data, index) => {
+                <div key={index} className="flex gap-3 items-center">
+                  <div className="p-4 bg-gray-200 rounded-md">
+                    <Image
+                      src={data?.heroImage}
+                      alt=""
+                      width={1000}
+                      height={1000}
+                      className="w-20 h-20"
+                    />
+                  </div>
+                </div>;
+              })
+            )}
+          </div>
         </div>
       </div>
     </div>
