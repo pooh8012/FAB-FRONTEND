@@ -39,36 +39,66 @@ function Modal({ setShowModal, productData }) {
       },
     ],
   };
+
   return (
-    <div className="fixed inset-0 z-10 bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
-      <div className="md:w-[35rem] bg-white rounded-xl shadow-xl border">
+    <div
+      onClick={() => setShowModal(false)}
+      className="fixed inset-0 z-10 bg-opacity-25 backdrop-blur-sm flex items-center justify-center"
+    >
+      <div className="md:w-[50rem] bg-white rounded-xl shadow-xl border">
         <div className="p-5 ">
           <div className="flex justify-center items-center">
             <h1 className="font-lato font-bold text-3xl">Product Details</h1>
-            <p
+
+            <div
               onClick={() => setShowModal(false)}
-              className="ml-auto cursor-pointer font-semibold text-2xl font-lato"
+              className=" ml-auto cursor-pointer"
             >
-              X
-            </p>
+              <svg
+                className="h-6 w-6 "
+                stroke="currentColor"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </div>
           </div>
           <div>
             <Slider {...settings}>
-              {productData?.map((image, index) => {
+              {productData?.images?.map((image, index) => {
                 return (
                   <div key={index}>
                     <Image
-                      src={image?.images}
+                      src={image}
                       alt="Product image"
                       width={1000}
                       height={1000}
-                      className="w-full h-52"
+                      className="w-full h-96"
                       loading="lazy"
                     />
                   </div>
                 );
               })}
             </Slider>
+          </div>
+          <div className="flex flex-col gap-3 mt-6">
+            <div className="flex items-center">
+              <h3 className="font-ssp text-black font-semibold text-2xl uppercase">
+                {productData?.name}
+              </h3>
+              <h3 className="font-ssp text-2xl ml-auto font-semibold">
+                ₹{productData?.price}
+              </h3>
+            </div>
+            <p className="font-lato text-gray-400 font-medium text-sm">
+              {productData?.description}
+            </p>
           </div>
         </div>
       </div>

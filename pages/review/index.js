@@ -133,9 +133,13 @@ function index() {
 
   useEffect(() => {
     const localStorageCart = localStorage.getItem("cartData");
+    // console.log(JSON.stringify(localStorageCart));
     if (localStorageCart) {
       const cart = JSON.parse(localStorageCart);
-      setProduct(cart);
+      const cartArr = Object.values(cart);
+      setProduct(cartArr);
+    } else {
+      console.log("Cart is empty");
     }
   }, []);
 
@@ -324,25 +328,28 @@ function index() {
           </button>
         </div>
         <div className="col-span-2 rounded-md border">
-          <div className="flex flex-col gap-3">
+          {/* <div className="flex flex-col gap-3">
             {!product ? (
               <></>
             ) : (
               product?.map((data, index) => {
-                <div key={index} className="flex gap-3 items-center">
-                  <div className="p-4 bg-gray-200 rounded-md">
-                    <Image
-                      src={data?.heroImage}
-                      alt=""
-                      width={1000}
-                      height={1000}
-                      className="w-20 h-20"
-                    />
+                
+                return (
+                  <div key={index} className="flex gap-3 items-center">
+                    <div className="p-4 bg-gray-200 rounded-md">
+                      <Image
+                        src={data?.heroImage}
+                        alt=""
+                        width={1000}
+                        height={1000}
+                        className="w-20 h-20"
+                      />
+                    </div>
                   </div>
-                </div>;
+                );
               })
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

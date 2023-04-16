@@ -19,7 +19,7 @@ function HomeProductCard({ productData }) {
     <div className="bg-[#f8f8f8] rounded-lg shadow-lg ">
       <div className="p-5">
         <Image
-          className="rounded-t-lg  cursor-pointer w-full h-56 rounded-md rounded-b-none"
+          className="rounded-t-lg object-cover cursor-pointer w-full h-56 rounded-md rounded-b-none"
           src={productData?.heroImage}
           alt=""
           width={1000}
@@ -27,10 +27,7 @@ function HomeProductCard({ productData }) {
           onClick={() => setShowModal(true)}
         />
         {showModal && (
-          <Modal
-            productData={productData?.images}
-            setShowModal={setShowModal}
-          />
+          <Modal productData={productData} setShowModal={setShowModal} />
         )}
         <div className="">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">

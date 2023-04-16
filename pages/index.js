@@ -7,10 +7,10 @@ import HomeTop from "../components/Home/HomeTop";
 import HowItWorks from "../components/Home/HowItWorks";
 import { useGetListProducts } from "../services/datasource";
 import ProductListing from "../components/Home/ProductListing";
+import HomeProductChair from "../components/Home/HomeProductChair";
+import HomeProdcutBed from "../components/Home/HomeProdcutBed";
 
 export default function Home({ productList }) {
-  // console.log(productList);
-
   return (
     <div>
       <Head>
@@ -20,19 +20,18 @@ export default function Home({ productList }) {
       </Head>
       <HomeTop />
       <ProductListing />
-      <HomeProduct productData={productList} />
-      <HomeDoorProduct productData={productList} />
+      <HomeProductChair productData={productList} />
+      <HomeProdcutBed productData={productList} />
+      {/* \<HomeProduct productData={productList} /> */}
+      {/* <HomeDoorProduct productData={productList} /> */}
 
-      <HomeBalconyProduct productData={productList} />
-      {/* <HowItWorks /> */}
+      {/* <HomeBalconyProduct productData={productList} /> */}
     </div>
   );
 }
 
 export async function getServerSideProps() {
   const data = await useGetListProducts();
-
-  // console.log(data?.data?.getProduct);
 
   return {
     props: {
