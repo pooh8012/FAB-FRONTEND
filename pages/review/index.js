@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { getTotal, handleGoogleSignIn } from "../../utils/function";
 import axios from "axios";
 
-function index() {
+function Review() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -356,4 +356,4 @@ function index() {
   );
 }
 
-export default index;
+export default Review;
