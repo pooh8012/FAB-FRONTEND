@@ -10,23 +10,7 @@ export function useGetListProducts() {
   return allProducts;
 }
 
-// export const useSubmitFormApi = (
-//   firstName,
-//   lastName,
-//   email,
-//   phoneNumber,
-//   address
-// ) => {
-//   try {
-//     let submitForm = client.mutate({
-//       mutation: SUBMIT_FORM_DATA,
-//       variables: { firstName, lastName, email, phoneNumber, address },
-//     });
-//     return submitForm;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+
 
 export const useSubmitFormApi = () => {
   const [submitForm, { loading, error, data }] = useMutation(SUBMIT_FORM_DATA);
