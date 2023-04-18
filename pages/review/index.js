@@ -131,17 +131,29 @@ function Review() {
 
   const [product, setProduct] = useState([]);
 
+  // useEffect(() => {
+  //   const localStorageCart = localStorage.getItem("cartData");
+  //   // console.log(JSON.stringify(localStorageCart));
+  //   if (localStorageCart) {
+  //     const cart = JSON.parse(localStorageCart);
+  //     const cartArr = Object.values(cart);
+  //     setProduct(cartArr);
+  //   } else {
+  //     console.log("Cart is empty");
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const localStorageCart = localStorage.getItem("cartData");
-    // console.log(JSON.stringify(localStorageCart));
-    if (localStorageCart) {
-      const cart = JSON.parse(localStorageCart);
-      const cartArr = Object.values(cart);
-      setProduct(cartArr);
+    if (!localStorage.getItem("cartData")) {
+      setProduct(cart);
     } else {
-      console.log("Cart is empty");
+      setProduct(Object.values(localStorage.getItem("cartData")));
     }
-  }, []);
+  }, [cart]);
+
+  useEffect(() => {
+    console.log(product, "Product");
+  }, [product]);
 
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
@@ -333,7 +345,6 @@ function Review() {
               <></>
             ) : (
               product?.map((data, index) => {
-                
                 return (
                   <div key={index} className="flex gap-3 items-center">
                     <div className="p-4 bg-gray-200 rounded-md">
