@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useSubmitFormApi } from "../../services/datasource";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
@@ -20,6 +20,30 @@ function Review() {
 
   const cart = useSelector((state) => state.cart);
 
+  const [product, setProduct] = useState([]);
+  const [calculatedPrice, setCalculatedPrice] = useState(0);
+
+  useEffect(() => {
+    const localStorageCart = localStorage.getItem("cartData");
+    if (localStorageCart) {
+      const cartData = JSON.parse(localStorageCart);
+      const productIds = cartData.productIds;
+      const quantities = cartData.quantities;
+      const totalPrice = cartData.totalPrice;
+
+      if (totalPrice) {
+        setCalculatedPrice(totalPrice + 50 + 100);
+      }
+      setProduct(
+        productIds.map((product, index) => ({
+          ...product,
+        }))
+      );
+    } else {
+      console.log("Cart is empty");
+    }
+  }, []);
+
   useEffect(() => {
     const totalAmount = getTotal(cart);
     if (totalAmount) {
@@ -36,11 +60,11 @@ function Review() {
     }
 
     // Calling Razorpay api and Initlizing the Razorpay
-    const response = await axios.post("/api/rajorpay", { amount });
+    const response = await axios.post("/api/rajorpay", { calculatedPrice });
     const { id } = response.data;
     const options = {
       key: "rzp_test_PjvHICxuulxUe6",
-      amount: amount,
+      amount: calculatedPrice,
       currency: "INR",
       name: "Fabricology",
       description: "Safe Payment with us",
@@ -129,19 +153,17 @@ function Review() {
 
   //localstorage
 
-  const [product, setProduct] = useState([]);
-
-  useEffect(() => {
-    const localStorageCart = localStorage.getItem("cartData");
-    // console.log(JSON.stringify(localStorageCart));
-    if (localStorageCart) {
-      const cart = JSON.parse(localStorageCart);
-      const cartArr = Object.values(cart);
-      setProduct(cartArr);
-    } else {
-      console.log("Cart is empty");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const localStorageCart = localStorage.getItem("cartData");
+  //   // console.log(JSON.stringify(localStorageCart));
+  //   if (localStorageCart) {
+  //     const cart = JSON.parse(localStorageCart);
+  //     const cartArr = Object.values(cart);
+  //     setProduct(cartArr);
+  //   } else {
+  //     console.log("Cart is empty");
+  //   }
+  // }, []);
 
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
@@ -327,29 +349,39 @@ function Review() {
             Submit
           </button>
         </div>
-        <div className="col-span-2 rounded-md border">
-          {/* <div className="flex flex-col gap-3">
+        <div className="col-span-2 rounded-md border h-52">
+          <div className="flex flex-col gap-3 px-3 py-5">
             {!product ? (
               <></>
             ) : (
               product?.map((data, index) => {
-                
                 return (
                   <div key={index} className="flex gap-3 items-center">
-                    <div className="p-4 bg-gray-200 rounded-md">
+                    <div className="p-2 bg-gray-200 rounded-md">
                       <Image
                         src={data?.heroImage}
                         alt=""
                         width={1000}
                         height={1000}
-                        className="w-20 h-20"
+                        className="w-10 h-10"
                       />
                     </div>
+                    <div>
+                      <p className="font-ssp font-semibold text-base">
+                        {data?.name}
+                      </p>
+                      <p className="font-ssp font-semibold text-base text-gray-400">
+                        Quantity: {data?.quantity}
+                      </p>
+                    </div>
+                    <h3 className="font-lato font-semibold text-lg text-black ml-auto">
+                      ₹{data?.price}
+                    </h3>
                   </div>
                 );
               })
             )}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

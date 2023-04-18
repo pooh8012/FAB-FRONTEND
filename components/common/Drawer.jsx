@@ -14,15 +14,13 @@ const CartDrawer = ({ open, onClose }) => {
   const handleCheckout = () => {
     if (cart?.length === 0) {
     } else {
+      const cartData = {
+        productIds: cart.map((item) => item),
+        quantities: cart.quantity,
+        totalPrice: getTotal(cart),
+      };
+      localStorage.setItem("cartData", JSON.stringify(cartData));
       router.push("/review");
-      localStorage.setItem(
-        "cartData",
-        JSON.stringify({
-          cart: cart,
-          totalPrice: getTotal(cart),
-          quantity: cart?.quantity,
-        })
-      );
     }
   };
 

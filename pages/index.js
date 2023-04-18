@@ -22,9 +22,8 @@ export default function Home({ productList }) {
       <ProductListing />
       <HomeProductChair productData={productList} />
       <HomeProdcutBed productData={productList} />
-      {/* \<HomeProduct productData={productList} /> */}
+      {/* <HomeProduct productData={productList} /> */}
       {/* <HomeDoorProduct productData={productList} /> */}
-
       {/* <HomeBalconyProduct productData={productList} /> */}
     </div>
   );
