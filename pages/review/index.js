@@ -32,8 +32,15 @@ function Review() {
       const totalPrice = cartData.totalPrice;
 
       if (totalPrice) {
-        setCalculatedPrice(totalPrice + 50 + 100);
+        console.log(totalPrice, "toatal price");
+        const gst = totalPrice * 0.18;
+        console.log(gst, "gst");
+
+        const deliveryCharges = 500;
+        const updatePrice = totalPrice + gst + deliveryCharges;
+        setCalculatedPrice(parseInt(updatePrice));
       }
+
       setProduct(
         productIds.map((product, index) => ({
           ...product,
@@ -43,6 +50,11 @@ function Review() {
       console.log("Cart is empty");
     }
   }, []);
+
+  useEffect(() => {
+    console.log(calculatedPrice);
+    console.log(typeof calculatedPrice);
+  }, [calculatedPrice]);
 
   useEffect(() => {
     const totalAmount = getTotal(cart);
@@ -349,8 +361,8 @@ function Review() {
             Submit
           </button>
         </div>
-        <div className="col-span-2 rounded-md border h-52">
-          <div className="flex flex-col gap-3 px-3 py-5">
+        <div className="col-span-2 overflow-y-auto">
+          <div className="flex flex-col gap-3 px-3 py-5 rounded-md border">
             {!product ? (
               <></>
             ) : (
@@ -381,6 +393,32 @@ function Review() {
                 );
               })
             )}
+          </div>
+          <div className="flex flex-col gap-2 p-2">
+            <div className="flex items-center">
+              <p className="font-ssp font-semibold text-lg">Subtotal:</p>
+              <p className="font-lato font-semibold text-base text-black ml-auto">
+                ₹{amount}
+              </p>
+            </div>
+            <div className="flex items-center">
+              <p className="font-ssp font-semibold text-lg">GST(18%):</p>
+              <p className="font-lato font-semibold text-base text-black ml-auto">
+                ₹{amount * 0.18}
+              </p>
+            </div>
+            <div className="flex items-center">
+              <p className="font-ssp font-semibold text-lg">Delivery Fee:</p>
+              <p className="font-lato font-semibold text-base text-black ml-auto">
+                ₹500
+              </p>
+            </div>
+            <div className="flex items-center">
+              <p className="font-ssp font-semibold text-xl">Total:</p>
+              <p className="font-lato font-semibold text-lg text-black ml-auto">
+                ₹{calculatedPrice}
+              </p>
+            </div>
           </div>
         </div>
       </div>
