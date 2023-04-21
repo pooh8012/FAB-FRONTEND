@@ -72,13 +72,15 @@ function Review() {
     }
 
     // Calling Razorpay api and Initlizing the Razorpay
-    const response = await axios.post("/api/rajorpay", { calculatedPrice });
+    const response = await axios.post("/api/rajorpay", {
+      amount: calculatedPrice,
+    });
     const { id } = response.data;
     const options = {
       key: "rzp_test_PjvHICxuulxUe6",
       amount: calculatedPrice,
       currency: "INR",
-      name: "Fabricology",
+      name: "FABRICATOLOGY",
       description: "Safe Payment with us",
       order_id: id,
       callback_url: "http://localhost:3000",
@@ -162,20 +164,6 @@ function Review() {
   };
 
   const { data: session, status } = useSession();
-
-  //localstorage
-
-  // useEffect(() => {
-  //   const localStorageCart = localStorage.getItem("cartData");
-  //   // console.log(JSON.stringify(localStorageCart));
-  //   if (localStorageCart) {
-  //     const cart = JSON.parse(localStorageCart);
-  //     const cartArr = Object.values(cart);
-  //     setProduct(cartArr);
-  //   } else {
-  //     console.log("Cart is empty");
-  //   }
-  // }, []);
 
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">

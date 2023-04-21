@@ -58,6 +58,7 @@ function Navbar() {
               )}
             </button>
           </div>
+
           <Link className="mx-auto flex items-center" href="/">
             <Image src={Logo} alt="" width={40} height={40} />
             <p className="font-ssp font-semibold text-lg">FABRICATOLOGY</p>
