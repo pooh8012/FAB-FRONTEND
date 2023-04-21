@@ -34,11 +34,11 @@ function Review() {
       if (totalPrice) {
         console.log(totalPrice, "toatal price");
         const gst = totalPrice * 0.18;
-        console.log(gst, "gst");
-
+        console.log(typeof gst, "Gst type");
         const deliveryCharges = 500;
+        console.log(typeof deliveryCharges, "delivery type");
         const updatePrice = totalPrice + gst + deliveryCharges;
-        setCalculatedPrice(parseInt(updatePrice));
+        setCalculatedPrice(Number(updatePrice));
       }
 
       setProduct(
@@ -76,9 +76,11 @@ function Review() {
       amount: calculatedPrice,
     });
     const { id } = response.data;
+    const totalCalculatedPrice = Math.round(calculatedPrice * 100);
+    const totalCalculatedString = totalCalculatedPrice.toString();
     const options = {
       key: "rzp_test_PjvHICxuulxUe6",
-      amount: calculatedPrice,
+      amount: totalCalculatedString,
       currency: "INR",
       name: "FABRICATOLOGY",
       description: "Safe Payment with us",
@@ -327,7 +329,6 @@ function Review() {
           {/* The HandleSubmit function and HandleMakePayment is applied on this button */}
           <button
             disabled={
-              status !== "authenticated" ||
               firstName === "" ||
               lastName === "" ||
               phoneNumber === "" ||
