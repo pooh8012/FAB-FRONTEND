@@ -95,7 +95,7 @@ function Navbar() {
               <div className="rounded-full">
                 <Link href={`/profile`}>
                   <Image
-                    src={session.user.image}
+                    src={User}
                     alt=""
                     width={25}
                     height={25}

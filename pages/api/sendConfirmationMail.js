@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 // const nodemailer = require("nodemailer");
 
 // export default async (req, res) => {
