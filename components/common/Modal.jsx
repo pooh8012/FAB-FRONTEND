@@ -45,7 +45,7 @@ function Modal({ setShowModal, productData }) {
       onClick={() => setShowModal(false)}
       className="fixed inset-0 z-10 bg-opacity-25 backdrop-blur-sm flex items-center justify-center"
     >
-      <div className="md:w-[50rem] bg-white rounded-xl shadow-xl border">
+      <div className="lg:w-[50rem] w-full bg-white rounded-xl shadow-xl border">
         <div className="p-5 ">
           <div className="flex justify-center items-center">
             <h1 className="font-lato font-bold text-3xl">Product Details</h1>

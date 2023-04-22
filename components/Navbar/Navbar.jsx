@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import Cart from "../../public/Assets/shopping-cart.png";
 import { useSelector } from "react-redux";
 import CartDrawer from "../common/Drawer";
+import User from "../../public/Assets/user.png";
+import { useSession } from "next-auth/react";
 
 function Navbar() {
   const [navbar, setNavbar] = useState(false);
@@ -20,6 +22,8 @@ function Navbar() {
     const body = document.querySelector("body");
     body.style.overflow = showModl ? "hidden" : "auto";
   });
+
+  const { data: session, status } = useSession();
 
   return (
     <div className="sticky top-0 inset-x-0 z-10 bg-white justify-center shadow-md">
@@ -63,6 +67,46 @@ function Navbar() {
             <Image src={Logo} alt="" width={40} height={40} />
             <p className="font-ssp font-semibold text-lg">FABRICATOLOGY</p>
           </Link>
+          <div className="lg:hidden flex gap-2 mx-2">
+            <div
+              onClick={() => {
+                setShowModal(true);
+              }}
+              className="cursor-pointer"
+            >
+              <div className="relative">
+                <Image src={Cart} alt="" width={20} height={20} />
+                {totalItems === 0 ? (
+                  <></>
+                ) : (
+                  <div className="absolute -top-3 -right-3 px-1 bg-blue-500 opacity-60 rounded-full text-center">
+                    {totalItems}
+                  </div>
+                )}
+              </div>
+            </div>
+            {status === "unauthenticated" ? (
+              <div className="border-2 p-0.5 rounded-full border-black">
+                <Link href={`/login`} className="">
+                  <Image src={User} alt="" width={15} height={15} />
+                </Link>
+              </div>
+            ) : (
+              <div className="rounded-full">
+                <Link href={`/profile`}>
+                  <Image
+                    src={session.user.image}
+                    alt=""
+                    width={25}
+                    height={25}
+                    className="rounded-full"
+                  />
+                </Link>
+              </div>
+            )}
+
+            <CartDrawer open={showModl} onClose={setShowModal} />
+          </div>
         </div>
         <div
           className={`flex lg:justify-center items-center lg:block w-full ${

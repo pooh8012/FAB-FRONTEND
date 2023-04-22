@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
@@ -39,6 +39,14 @@ function Profile() {
               {session?.user?.email}
             </p>
           </div>
+        </div>
+        <div className="mt-2 flex justify-center items-center">
+          <button
+            onClick={() => signOut()}
+            className="bg-black px-3 py-1 text-white font-ssp font-semibold text-lg rounded-lg"
+          >
+            Sign out
+          </button>
         </div>
       </div>
     </div>

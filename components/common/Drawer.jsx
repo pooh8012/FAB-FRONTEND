@@ -34,7 +34,7 @@ const CartDrawer = ({ open, onClose }) => {
     >
       <div
         style={{ zIndex: "1" }}
-        className="absolute top-0 right-0 pt-2 pr-4  w-96 px-5 py-10 h-full border border-solid shadow-lg bg-white"
+        className="absolute top-0 right-0 pt-2 pr-4  lg:w-96 w-full px-5 py-10 h-full border border-solid shadow-lg bg-white"
       >
         <div className="flex items-center border border-black py-2 border-t-0 border-l-0 border-r-0 border-b">
           <h1 className="font-ssp font-medium text-lg text-black">
