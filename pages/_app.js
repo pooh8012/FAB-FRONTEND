@@ -5,6 +5,7 @@ import "../styles/globals.css";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "../graphql/apollo.config";
 import { SessionProvider } from "next-auth/react";
+import Footer from "../components/Footer/Footer";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <Provider store={store}>
             <Navbar />
             <Component {...pageProps} />
+            <Footer />
           </Provider>
         </ApolloProvider>
       </SessionProvider>
