@@ -196,6 +196,27 @@ function Navbar() {
 
               <CartDrawer open={showModl} onClose={setShowModal} />
             </li>
+            <li>
+              {status === "unauthenticated" ? (
+                <div className="border-2 p-0.5 rounded-full border-black">
+                  <Link href={`/login`} className="">
+                    <Image src={User} alt="" width={15} height={15} />
+                  </Link>
+                </div>
+              ) : (
+                <div className="rounded-full">
+                  <Link href={`/profile`}>
+                    <Image
+                      src={session?.user?.image}
+                      alt=""
+                      width={25}
+                      height={25}
+                      className="rounded-full"
+                    />
+                  </Link>
+                </div>
+              )}
+            </li>
           </ul>
         </div>
       </div>

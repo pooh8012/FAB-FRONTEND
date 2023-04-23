@@ -11,14 +11,6 @@ export const authOptions = {
   theme: {
     colorScheme: "light",
   },
-  callbacks: {
-    async signIn({ account, profile }) {
-      if (account.provider === "google") {
-        return profile.email_verified && profile.email.endsWith("@gmail.com");
-      }
-      return true;
-    },
-  },
 };
 
 export default NextAuth(authOptions);

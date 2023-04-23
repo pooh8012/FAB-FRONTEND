@@ -3,6 +3,7 @@ import React from "react";
 import Logo from "../../public/Assets/fablogo.png";
 import GoogleIcon from "../../public/Assets/google.png";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { handleGoogleSignIn } from "../../utils/function";
 
 function Login() {
   return (
@@ -33,7 +34,10 @@ function Login() {
               Please login to process with your checkout.
             </p>
             <div className="px-3 py-2 bg-white rounded-full shadow-md border">
-              <div onClick={() => signIn()} className="flex gap-2 items-center">
+              <div
+                onClick={() => handleGoogleSignIn("/g-auth", "Google login")}
+                className="flex gap-2 items-center cursor-pointer"
+              >
                 <Image src={GoogleIcon} alt="" width={20} height={20} />
                 <p className="font-ssp font-semibold text-lg">
                   Sign up from Google

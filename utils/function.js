@@ -33,3 +33,47 @@ export const handleGoogleSignIn = (url, title) => {
     console.error(error);
   }
 };
+
+// export const getMonthName = (param) => {
+//   try {
+//     let d = new Date(param);
+//     let month = monthNames[d.getMonth()];
+//     return month;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+// export const getDateInLocaleString = (param) => {
+//   try {
+//     if (param) {
+//       let d = new Date(param + " 00:00:00");
+//       let date = d.getDate();
+//       if (date.toString()?.length < 2) {
+//         date = "0" + date;
+//       }
+//       let month = getMonthName(param)?.slice(0, 3);
+//       let year = d.getFullYear();
+//       let localeDate = `${date} ${month}, ${year}`;
+//       return localeDate;
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+export const getDateInLocaleString = (param) => {
+  try {
+    if (param) {
+      const [year, month, day] = param.split("-");
+      const d = new Date(year, month - 1, day);
+      const date = d.getDate();
+      const monthName = monthNames[d.getMonth()].slice(0, 3);
+      const yearStr = d.getFullYear().toString();
+      const localeDate = `${date} ${monthName}, ${yearStr}`;
+      return localeDate;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};

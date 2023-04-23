@@ -107,7 +107,7 @@ function ProductListing() {
               Balcony
             </p>
             <Image
-              src="https://res.cloudinary.com/dvtnfa8nt/image/upload/v1682272231/aba1c6dfdcc604127e132a2ca3627b54-removebg-preview_hr0khi.png"
+              src="https://res.cloudinary.com/dvtnfa8nt/image/upload/v1682273225/large_thumbnail-removebg-preview_ufab3d.png"
               alt=""
               width={1000}
               height={1000}

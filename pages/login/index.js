@@ -8,7 +8,7 @@ function index() {
   const Router = useRouter();
 
   if (status === "authenticated") {
-    Router.push("/profile");
+    Router.push("/");
   }
 
   return (
