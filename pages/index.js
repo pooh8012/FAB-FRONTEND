@@ -1,14 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
-import HomeBalconyProduct from "../components/Home/HomeBalconyProduct";
-import HomeDoorProduct from "../components/Home/HomeDoorProduct";
-import HomeProduct from "../components/Home/HomeProduct";
+import HomeProductGates from "../components/Home/HomeProductGates";
+import HomeProductStorage from "../components/Home/HomeProductStorage";
 import HomeTop from "../components/Home/HomeTop";
 import HowItWorks from "../components/Home/HowItWorks";
 import { useGetListProducts } from "../services/datasource";
 import ProductListing from "../components/Home/ProductListing";
 import HomeProductChair from "../components/Home/HomeProductChair";
 import HomeProdcutBed from "../components/Home/HomeProdcutBed";
+import HomeProductBalcony from "../components/Home/HomeProductBalcony";
 
 export default function Home({ productList }) {
   return (
@@ -22,9 +22,9 @@ export default function Home({ productList }) {
       <ProductListing />
       <HomeProductChair productData={productList} />
       <HomeProdcutBed productData={productList} />
-      {/* <HomeProduct productData={productList} /> */}
-      {/* <HomeDoorProduct productData={productList} /> */}
-      {/* <HomeBalconyProduct productData={productList} /> */}
+      <HomeProductStorage productData={productList} />
+      <HomeProductGates productData={productList} />
+      <HomeProductBalcony productData={productList} />
     </div>
   );
 }

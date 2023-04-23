@@ -52,7 +52,15 @@ function ProductListing() {
               className="w-full h-full"
             />
           </div>
-          <div className="bg-gray-100 hover:bg-gray-400 transform transition duration-150 ease-in-out cursor-pointer flex flex-col gap-2 p-10  rounded-md col-span-2">
+          <div
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .getElementById("STORAGE")
+                .scrollIntoView({ behavior: "smooth" });
+            }}
+            className="bg-gray-100 hover:bg-gray-400 transform transition duration-150 ease-in-out cursor-pointer flex flex-col gap-2 p-10  rounded-md col-span-2"
+          >
             <p className="font-semibold font-ssp text-lg text-black text-start">
               Storage
             </p>
@@ -65,7 +73,15 @@ function ProductListing() {
             />
           </div>
         </div>
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-3 mt-3">
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            document
+              .getElementById("GATES")
+              .scrollIntoView({ behavior: "smooth" });
+          }}
+          className="grid md:grid-cols-2 grid-cols-1 gap-3 mt-3"
+        >
           <div className="bg-gray-100 md:h-96 hover:bg-gray-400 transform transition duration-150 ease-in-out cursor-pointer flex flex-col gap-2 p-10  rounded-md ">
             <p className="font-semibold font-ssp text-lg text-black text-start">
               Gates
@@ -78,12 +94,20 @@ function ProductListing() {
               className="w-full h-full"
             />
           </div>
-          <div className="bg-gray-100 md:h-96 hover:bg-gray-400 transform transition duration-150 ease-in-out cursor-pointer flex flex-col gap-2 p-10  rounded-md">
+          <div
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .getElementById("BALCONY")
+                .scrollIntoView({ behavior: "smooth" });
+            }}
+            className="bg-gray-100 md:h-96 hover:bg-gray-400 transform transition duration-150 ease-in-out cursor-pointer flex flex-col gap-2 p-10  rounded-md"
+          >
             <p className="font-semibold font-ssp text-lg text-black text-start">
-              Storage
+              Balcony
             </p>
             <Image
-              src="https://res.cloudinary.com/dh7xchikj/image/upload/v1681638814/Pooja%20Project/Pooja/2_-1-removebg-preview_xuhfyo.png"
+              src="https://res.cloudinary.com/dvtnfa8nt/image/upload/v1682272231/aba1c6dfdcc604127e132a2ca3627b54-removebg-preview_hr0khi.png"
               alt=""
               width={1000}
               height={1000}
