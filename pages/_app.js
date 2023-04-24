@@ -9,6 +9,7 @@ import Footer from "../components/Footer/Footer";
 import { useRouter } from "next/router";
 import RouteLoader from "../components/common/RouteLoader";
 import { useState } from "react";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const Router = useRouter();
@@ -25,6 +26,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <SessionProvider session={session}>
         <ApolloProvider client={client}>
           <Provider store={store}>
+            <Head>
+              <title>Fabricatlogy</title>
+            </Head>
             <Navbar />
             {loading === true ? (
               <RouteLoader />

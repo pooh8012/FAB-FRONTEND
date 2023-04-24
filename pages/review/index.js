@@ -1,6 +1,6 @@
 import React, { use, useEffect, useState } from "react";
 import { useSubmitFormApi } from "../../services/datasource";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { getTotal, handleGoogleSignIn } from "../../utils/function";
