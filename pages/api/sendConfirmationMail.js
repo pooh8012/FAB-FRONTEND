@@ -1,40 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
-// const nodemailer = require("nodemailer");
 
 import { getDateInLocaleString } from "../../utils/function";
-
-// export default async (req, res) => {
-//   const { formData } = req.body;
-//   const { name, email } = formData;
-
-//   if (!email) {
-//     return res.status(400).json({ message: "Email is required" });
-//     console.log(email, "Verified email");
-//   }
-//   let testAccount = nodemailer.createTransport({
-//     host: "smtp.gmail.com",
-//     port: 587,
-//     secure: false,
-//     auth: {
-//       user: "pjha.prakash0812@gmail.com",
-//       pass: "xblebkezfycxmrcq",
-//     },
-//   });
-
-//   const mailOptions = {
-//     from: "pjha.prakash0812@gmail.com",
-//     to: email,
-//     subject: `Form Submition`,
-//     text: `Hello ${name}, Thank you for ordering from our website we will happy to help you`,
-//   };
-//   try {
-//     await testAccount.sendMail(mailOptions);
-//     res.status(200).json({ message: "Email send" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "EMail failded" });
-//   }
-// };
 
 const nodemailer = require("nodemailer");
 
@@ -50,8 +16,6 @@ export default async (req, res) => {
     zipCode,
   } = req.body;
 
-  console.log(email);
-
   if (!email) {
     return res.status(400).json({ message: "Name and email are required" });
   }
@@ -61,15 +25,15 @@ export default async (req, res) => {
     port: 587,
     secure: false,
     auth: {
-      user: "pjha.prakash0812@gmail.com",
-      pass: "xblebkezfycxmrcq",
+      user: "fabricatology@gmail.com",
+      pass: "mqgnqfqdltyfirct",
     },
   });
 
   const date = new Date();
 
   const mailOptions = {
-    from: "pjha.prakash0812@gmail.com",
+    from: "fabricatology@gmail.com",
     to: email,
     subject: `Order Confirmation`,
     // text: `Hello ${firstName} ${lastName}. Thank you for ordering from our website. Your communication address is ${address} ${city} ${state} ${zipCode}. Case of any delay with product we will notify you on this number ${phoneNumber}`,

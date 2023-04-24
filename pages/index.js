@@ -3,7 +3,6 @@ import Image from "next/image";
 import HomeProductGates from "../components/Home/HomeProductGates";
 import HomeProductStorage from "../components/Home/HomeProductStorage";
 import HomeTop from "../components/Home/HomeTop";
-import HowItWorks from "../components/Home/HowItWorks";
 import { useGetListProducts } from "../services/datasource";
 import ProductListing from "../components/Home/ProductListing";
 import HomeProductChair from "../components/Home/HomeProductChair";

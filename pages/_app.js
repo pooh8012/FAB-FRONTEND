@@ -6,6 +6,7 @@ import { ApolloProvider } from "@apollo/client";
 import { client } from "../graphql/apollo.config";
 import { SessionProvider } from "next-auth/react";
 import Footer from "../components/Footer/Footer";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
@@ -13,6 +14,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <SessionProvider session={session}>
         <ApolloProvider client={client}>
           <Provider store={store}>
+            <Head>
+              <title>Fabricatlogy</title>
+            </Head>
             <Navbar />
             <Component {...pageProps} />
             <Footer />

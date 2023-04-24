@@ -7,7 +7,7 @@ function HomeProductGates({ productData }) {
       <h1 className="font-lato font-semibold md:text-3xl text-lg md:text-start text-center">
         Gates
       </h1>
-      <div className="grid grid-cols-3 gap-3 mt-5">
+      <div className="grid lg:grid-cols-3 grid-cols-1 gap-3 mt-5">
         {productData?.map((product, index) => {
           if (product?.type === "GATES")
             return <HomeProductCard key={index} productData={product} />;
