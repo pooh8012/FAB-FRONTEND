@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import { getTotal, handleGoogleSignIn } from "../../utils/function";
 import axios from "axios";
+import Loginmodal from "../../components/Login/Loginmodal";
 
 function Review() {
   const [firstName, setFirstName] = useState("");
@@ -166,6 +167,8 @@ function Review() {
   };
 
   const { data: session, status } = useSession();
+
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="container mx-auto lg:px-14 px-5 mt-10 py-5 ">
@@ -338,11 +341,18 @@ function Review() {
               zipCode === "" ||
               state === ""
                 ? true
+                : status === "unauthenticated"
+                ? false
                 : false
             }
             onClick={() => {
-              handleSubmit();
-              handleMakePayment();
+              if (status === "unauthenticated") {
+                setShowModal(true);
+              } else {
+                handleSubmit();
+                handleMakePayment();
+                setShowModal(false);
+              }
             }}
             className="bg-black disabled:bg-gray-600 text-white rounded-lg py-3"
             type="submit"
@@ -350,6 +360,7 @@ function Review() {
             Submit
           </button>
         </div>
+        {showModal && <Loginmodal setShowModal={setShowModal} />}
         <div className="col-span-2 overflow-y-auto">
           <div className="flex flex-col gap-3 px-3 py-5 rounded-md border">
             {!product ? (

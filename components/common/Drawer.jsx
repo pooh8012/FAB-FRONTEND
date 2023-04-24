@@ -28,7 +28,7 @@ const CartDrawer = ({ open, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-10 bg-opacity-25 backdrop-grayscale ${
+      className={`fixed inset-0 z-10 bg-opacity-25 bg-black  ${
         open ? "block" : "hidden"
       }`}
     >

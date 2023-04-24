@@ -6,15 +6,33 @@ import { ApolloProvider } from "@apollo/client";
 import { client } from "../graphql/apollo.config";
 import { SessionProvider } from "next-auth/react";
 import Footer from "../components/Footer/Footer";
+import { useRouter } from "next/router";
+import RouteLoader from "../components/common/RouteLoader";
+import { useState } from "react";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  const Router = useRouter();
+  const [loading, setLoading] = useState(false);
+  // Router.events.on("routeChangeStart", (url) => {
+  //   setLoading(true);
+  // });
+  // Router.events.on("routeChangeComplete", (url) => {
+  //   setLoading(false);
+  // });
+
   return (
     <>
       <SessionProvider session={session}>
         <ApolloProvider client={client}>
           <Provider store={store}>
             <Navbar />
-            <Component {...pageProps} />
+            {loading === true ? (
+              <RouteLoader />
+            ) : (
+              <>
+                <Component {...pageProps} />
+              </>
+            )}
             <Footer />
           </Provider>
         </ApolloProvider>
