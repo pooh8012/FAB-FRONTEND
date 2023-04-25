@@ -28,6 +28,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <Provider store={store}>
             <Head>
               <title>Fabricatlogy</title>
+              <link rel="icon" href="/fablogo.ico" />
             </Head>
             <Navbar />
             {loading === true ? (
