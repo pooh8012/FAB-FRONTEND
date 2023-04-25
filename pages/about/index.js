@@ -1,12 +1,13 @@
 import React from "react";
-import AboutTop from "../../components/common/About/AboutTop";
 import AboutUs from "../../components/common/About/AboutUs";
+import Aboutus from "../../components/About/Aboutus";
+import AboutusContent from "../../components/About/AboutusContent";
 
 function index() {
   return (
     <>
-      <AboutTop />
-      <AboutUs />
+      <Aboutus />
+      <AboutusContent />
     </>
   );
 }

@@ -30,8 +30,6 @@ export default async (req, res) => {
     },
   });
 
-  const date = new Date();
-
   const mailOptions = {
     from: "fabricatology@gmail.com",
     to: email,
@@ -40,10 +38,9 @@ export default async (req, res) => {
     html: `
     <p>Dear ${firstName} ${lastName},</p>
     <p>Thank you for placing your order with FABRICATOLOGY. We are delighted to confirm that your order has been received and is currently being processed.</p>
-    <p>We would like to assure you that our team is working hard to fulfill your order as soon as possible. Our current processing time is X days, after which your order will be shipped to the shipping address provided during checkout.</p>
+    <p>We would like to assure you that our team is working hard to fulfill your order as soon as possible. Our current processing time is 2 working days, after which your order will be shipped to the shipping address provided during checkout.</p>
     <p>Here is a summary of your order:</p>
     <ul>
-      <li>Order Date: ${getDateInLocaleString(date)}</li>
       <li>Delivery Address: ${address}, ${city}, ${state}, ${zipCode}</li>
     </ul>
     <p>If you have any questions or concerns about your order, please do not hesitate to contact us. You can reach us by replying to this email. Our friendly customer service representatives will be more than happy to assist you.</p>

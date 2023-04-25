@@ -166,7 +166,8 @@ function Navbar() {
               } text-lg font-bold font-ssp uppercase px-3 text-black lg:hover:underline decoration-black decoration-[7px] underline-offset-[17px]`}
             >
               <Link
-                href="/contact"
+                target="_blank"
+                href="mailto:fabricatology@gmail.com"
                 onClick={() => {
                   setNavbar(!navbar);
                 }}
